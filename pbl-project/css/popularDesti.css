@@ -1,0 +1,94 @@
+/* Popular destination Center */
+
+.destinations2 {
+    padding-top: 2rem;
+    width: 100vw;
+    /* height: 100vw;  */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+
+}
+
+.container2 {
+    display: flex;
+    flex-direction: column;
+    gap: rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 14/15%;
+}
+
+.Popular-Desti {
+    font-size: 2rem;
+    font-weight: 600;
+    /* font-style: oblique; */
+
+}
+
+.grid {
+    /* width: 11/16%; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.card {
+
+    display: flex;
+    width: 25%;
+    flex-direction: column;
+    margin: 2rem;
+    gap: 1.5rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    justify-content:center;
+}
+
+.card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.btn {
+    background-color: rgb(89, 178, 222);
+    width: fit-content;
+    color: white;
+    padding: 0.8rem 2.3rem;
+    box-shadow: 5px 5px 7px 0px #0000003f;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.5s;
+    font-weight: 500;
+    border: solid 3px transparent;
+    position: relative;
+    z-index: 1;
+    border-radius: 3rem;
+}
+
+.search-location{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 0.1px solid black 300px; */
+    margin-top: 2rem;
+
+}
+
+.location-img{
+    width: 140px;
+}

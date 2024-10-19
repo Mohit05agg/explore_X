@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Places</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Google Maps API -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDOzjTjf01A0aBmDmnqyNKxGDASg2x7bE" -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDDOzjTjf01A0aBmDmnqyNKxGDASg2x7bE&libraries=places"
+        async defer></script>
+    <style>
+        /* add custom styles here */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <br><br>
+        <h1 class="text-center">Nearby Places</h1>
+        <div id="map"></div>
+        <div class="form-group">
+            <label for="autocomplete">Enter the location</label>
+            <input type="text" class="form-control" id="autocomplete" placeholder="Enter the location">
+        </div>
+        <div class="form-group">
+            <label for="type">Select place type</label>
+            <select class="form-control" id="type">
+                <option value="park" id="park">Park</option>
+                <option value="accounting" id="accounting">Accounting</option>
+                <option value="airport" id="airport">Airport</option>
+                <option value="amusement_park" id="amusement_park">Amusement Park</option>
+                <option value="library" id="library">Library</option>
+                <option value="Hotel" id="Hotel">Hotel</option>
+                <option value="school" id="school">school</option>
+                <option value="university" id="university">University</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" onclick="searchNearbyPlaces()">Search</button>
+        <br><br>
+        <table class="table table-bordered table-striped" id="places"></table>
+    </div>
+
+    <script>
+        // initialize the map and autocomplete objects
+        window.onload = function() {
+            initMap();
+          };
+        let map;
+        let autocomplete;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: {
+                    lat: 37.7749,
+                    lng: -122.4194
+                },
+                zoom: 13,
+            });
+
+            autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {
+                types: ['geocode']
+            });
+
+            // add the place_changed event listener to the autocomplete object
+            autocomplete.addListener('place_changed', searchNearbyPlaces);
+
+            
+        }
+
+        // handle the searchNearbyPlaces function
+        function searchNearbyPlaces() {
+            // clear the table
+            document.getElementById('places').innerHTML = '';
+
+            // get the place and service objects
+            let place = autocomplete.getPlace();
+            let service = new google.maps.places.PlacesService(map);
+            console.log(place);
+            console.log(service);
+            // perform a nearby search
+            <!-- service.searchNearbyPlaces -->
+            service.nearbySearch({
+                location: place.geometry.location,
+                radius: '50000',
+                type: [document.getElementById('type').value]
+            }, callback);
+        }
+
+        // handle the callback function
+        function callback(results, status) {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                console.log(results.length);
+                for (let i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            }
+        }
+
+        function createMarker(place) {
+            console.log(place);
+            let table = document.getElementById('places');
+            let row = table.insertRow();
+            let cell1 = row.insertCell(0);
+            cell1.innerHTML = place.name;
+
+            if (place.photos) {
+                let photoUrl = place.photos[0].getUrl();
+                let cell2 = row.insertCell(1);
+                cell2.innerHTML = `<img width="300" height="300" src="${photoUrl}"/>`;
+            } else {
+                let photoUrl = 'https://via.placeholder.com/150';
+                let cell2 = row.insertCell(1);
+                cell2.innerHTML = `<img width="300" height="300" src="${photoUrl}"/>`;
+            }
+        }
+    </script>
+    
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    image: my-web-app  # The image you built earlier
+    build:
+      context: .
+    ports:
+      - "3000:80"  # Map port 3000 of your machine to port 80 of the container
+    deploy:
+      replicas: 3  # Number of containers to scale (change as needed)
+    networks:
+      - webnet
+
+networks:
+  webnet:
